@@ -1,2 +1,3 @@
 module node {
+    requires common;
 }
