@@ -2,13 +2,15 @@ package md.utm.fcim.dto;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class UserDto implements Serializable {
+
+    private static final long serialVersionUID = -892580799899961833L;
 
     private Long id;
     private String name;
-    private Integer age;
+    private Long age;
 
-    public User() {
+    public UserDto() {
     }
 
     public Long getId() {
@@ -27,17 +29,17 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public Integer getAge() {
+    public Long getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(Long age) {
         this.age = age;
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +

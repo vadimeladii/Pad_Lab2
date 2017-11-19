@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class DependencyNode implements Serializable {
 
+    private static final long serialVersionUID = -2649593091586008751L;
+
     private Long id;
     private String host;
     private Integer port;

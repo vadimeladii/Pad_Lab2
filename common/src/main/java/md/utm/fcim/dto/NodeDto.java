@@ -3,23 +3,17 @@ package md.utm.fcim.dto;
 import java.io.Serializable;
 import java.util.List;
 
-public class NodeDescription implements Serializable {
+public class NodeDto implements Serializable {
+
+    private static final long serialVersionUID = -575076196921111424L;
 
     private Long id;
     private String host;
     private Integer port;
     private List<DependencyNode> dependencies;
-    private List<User> users;
+    private List<UserDto> users;
 
-    public NodeDescription() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public NodeDto() {
     }
 
     public String getHost() {
@@ -46,18 +40,26 @@ public class NodeDescription implements Serializable {
         this.dependencies = dependencies;
     }
 
-    public List<User> getUsers() {
+    public List<UserDto> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<UserDto> users) {
         this.users = users;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
-        return "NodeDescription{" +
-                "id=" + id +
+        return "NodeDto{" +
+                ", id='" + id + '\'' +
                 ", host='" + host + '\'' +
                 ", port=" + port +
                 ", dependencies=" + dependencies +
