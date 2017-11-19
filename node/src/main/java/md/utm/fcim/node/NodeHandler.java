@@ -1,19 +1,18 @@
-package md.utm.fcim.node.handler;
+package md.utm.fcim.node;
 
-import md.utm.fcim.node.Node;
-import md.utm.fcim.repository.NodeRepository;
-import md.utm.fcim.repository.impl.NodeRepositoryImpl;
+import md.utm.fcim.service.NodeService;
+import md.utm.fcim.service.impl.NodeServiceImpl;
 
 public class NodeHandler {
 
-    private NodeRepository nodeRepository;
+    private NodeService nodeService;
 
-    public NodeHandler() {
-        this.nodeRepository = new NodeRepositoryImpl();
+    NodeHandler() {
+        this.nodeService = new NodeServiceImpl();
     }
 
     public void createNodes() {
-        this.nodeRepository.findAll()
+        this.nodeService.findAll()
                 .forEach(nodeDescription -> {
                     new Thread(() -> {
                         new Node(nodeDescription);

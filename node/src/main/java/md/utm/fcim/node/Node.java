@@ -1,24 +1,41 @@
 package md.utm.fcim.node;
 
-import md.utm.fcim.dto.NodeDescription;
-import md.utm.fcim.node.tcp.TCPServer;
+import md.utm.fcim.connection.udp.UdpTool;
+import md.utm.fcim.constant.Utils;
+import md.utm.fcim.dto.NodeDto;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
 
 public class Node {
 
-    private NodeDescription nodeDescription;
+    private NodeDto nodeDto;
 
-    public Node(NodeDescription nodeDescription) {
-        this.nodeDescription = nodeDescription;
-        System.out.println(nodeDescription);
+    public Node(NodeDto nodeDto) {
+        this.nodeDto = nodeDto;
+        System.out.println(nodeDto);
         this.run();
     }
 
     private void run() {
-        new TCPServer(nodeDescription).start();
+        new NodeServer(nodeDto).start();
+
+        UdpTool udp = new UdpTool();
+        DatagramPacket receivePacket;
+
+        try {
+            while (true) {
+                receivePacket = udp.receiveMulticast(Utils.IP_GROUP, Utils.PORT_GROUP);
+
+                System.out.println("udp" + this.nodeDto);
+                udp.sendResponseToClient(this.nodeDto, receivePacket, Utils.PORT_GROUP, Utils.IP_GROUP);
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
 
     }
-
-
 
 
 }
