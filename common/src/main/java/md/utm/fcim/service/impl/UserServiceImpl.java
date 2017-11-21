@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
@@ -26,10 +27,9 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> methodReference(MessageDto message) {
         List<UserDto> users = new ArrayList<>();
         try {
-            Method findAll = UserService.class.getDeclaredMethod(message.getMethod().getName(), FieldName.class, OperationType.class);
+            Method findAll = UserService.class.getDeclaredMethod(message.getMethod().getName(), FieldName.class, OperationType.class, String.class);
             try {
-                users = (List<UserDto>) findAll.invoke(this, message.getField(), message.getOperation());
-                users.forEach(System.out::println);
+                users = (List<UserDto>) findAll.invoke(this, message.getField(), message.getOperation(), message.getValue());
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -40,23 +40,42 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> findAll(FieldName field, OperationType operation) {
+    public List<UserDto> all(FieldName field, OperationType operation, String value) {
         return users;
     }
 
     @Override
-    public List<UserDto> sorted(FieldName field, OperationType operation) {
+    public List<UserDto> sorted(FieldName field, OperationType operation, String value) {
         return users
                 .stream()
                 .sorted(Objects.requireNonNull(buildComparatorForSorted(field, operation)))
                 .collect(Collectors.toList());
     }
 
-    public List<UserDto> filter() {
+    public List<UserDto> filter(FieldName field, OperationType operation, String value) {
         return users
                 .stream()
-                .filter(user -> user.getAge() < 22)
+                .filter(Objects.requireNonNull(buildFilter(field, operation, value)))
                 .collect(Collectors.toList());
+    }
+
+    private Predicate<? super UserDto> buildFilter(FieldName field, OperationType operation, String value) {
+        Integer i = Integer.parseInt(value);
+        switch (field) {
+            case ID:
+                if (operation.equals(OperationType.GREATER))
+                    return user -> user.getId() > (i);
+                if (operation.equals(OperationType.LESS))
+                    return user -> user.getId() < (i);
+            case AGE:
+                if (operation.equals(OperationType.GREATER))
+                    return user -> user.getAge() > (i);
+                if (operation.equals(OperationType.LESS))
+                    return user -> user.getAge() < (i);
+            default:
+                System.out.println("Command not found");
+        }
+        return null;
     }
 
     private Comparator<? super UserDto> buildComparatorForSorted(FieldName field, OperationType operation) {

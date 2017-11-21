@@ -3,7 +3,7 @@ package md.utm.fcim.constant;
 import java.io.Serializable;
 
 public enum MethodName implements Serializable {
-    FILTER("filter"), SORTED("sorted");
+    FILTER("filter"), SORTED("sorted"), ALL("all");
 
     private String name;
 

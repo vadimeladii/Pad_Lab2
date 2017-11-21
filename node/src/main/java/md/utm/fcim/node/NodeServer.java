@@ -47,12 +47,18 @@ public class NodeServer extends Thread {
                 new Thread(() -> {
                     ClientConnectionImpl clientConnection = new ClientConnectionImpl(accept);
                     MessageDto messageFromGateway = clientConnection.receiverMessage();
+                    if (messageFromGateway.getNodeType().equals(NodeType.MAIN)) {
+                        Utils.dependencyNodes.clear();
+                    }
 
                     Utils.dependencyNodes.add(nodeDto.getId());
 
                     users = getUserFromDependencies(messageFromGateway);
+
+                    System.out.println("1--------------------------------");
                     users.entrySet().forEach(System.out::println);
                     users.put(nodeDto.getId(), nodeDto.getUsers());
+                    System.out.println("2--------------------------------");
 
                     handlerUsers(messageFromGateway, clientConnection);
                     users.clear();
@@ -68,6 +74,8 @@ public class NodeServer extends Thread {
         MessageDto messageDto = new MessageDto(message.getMethod(), message.getField(), message.getOperation(), message.getValue());
         messageDto.setNodeType(NodeType.CHILDREN);
         Map<Long, List<UserDto>> users = new HashMap<>();
+        System.out.println("+++nodeDto" + nodeDto);
+        System.out.println("++++UTILS" + Utils.dependencyNodes);
         if (nodeDto.getDependencies() != null) {
             nodeDto.getDependencies().forEach(dependencyNode -> {
                 if (Utils.dependencyNodes.stream().noneMatch(id -> id.equals(dependencyNode.getId()))) {

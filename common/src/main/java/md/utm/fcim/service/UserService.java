@@ -12,9 +12,11 @@ public interface UserService {
 
     List<UserDto> methodReference(MessageDto message);
 
-    List<UserDto> findAll(FieldName field, OperationType operation);
+    List<UserDto> all(FieldName field, OperationType operation, String value);
 
-    List<UserDto> sorted(FieldName field, OperationType operation);
+    List<UserDto> sorted(FieldName field, OperationType operation, String value);
+
+    List<UserDto> filter(FieldName field, OperationType operation, String value);
 
     UserServiceImpl withUsers(List<UserDto> users);
 }

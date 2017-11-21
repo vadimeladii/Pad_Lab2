@@ -12,29 +12,29 @@ import java.util.List;
 
 public class UdpTool {
 
-    public List<NodeDto> getNodesByMulticast(String group, int port, String message) throws IOException {
+    public List<NodeDto> getNodesByMulticast(String group, Integer port, String message) throws IOException {
 
-        MulticastSocket s = new MulticastSocket();
+        MulticastSocket multicastSocket = new MulticastSocket();
         List<NodeDto> nodes = new ArrayList<>();
 
         InetAddress IPAddress = InetAddress.getByName(group);
 
         byte[] sendData;
-        byte[] receiveData = new byte[10000];
+        byte[] receiveData = new byte[1000];
 
         sendData = message.getBytes();
         DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
-        s.send(sendPacket);
+        multicastSocket.send(sendPacket);
         try {
-            s.setSoTimeout(5000);
+            multicastSocket.setSoTimeout(5000);
 
-            while (s.getSoTimeout() > 0) {
+            while (multicastSocket.getSoTimeout() > 0) {
                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-                s.receive(receivePacket);
+                multicastSocket.receive(receivePacket);
 
                 nodes.add(SerializationUtils.deserialize(receivePacket.getData()));
             }
-            s.close();
+            multicastSocket.close();
         } catch (Exception e) {
             System.out.println("Soket time out for receive");
         }
@@ -42,20 +42,20 @@ public class UdpTool {
     }
 
     public DatagramPacket receiveMulticast(String group, int port) throws IOException {
-        MulticastSocket s = new MulticastSocket(port);
-        s.joinGroup(InetAddress.getByName(group));
+        MulticastSocket multicastSocket = new MulticastSocket(port);
+        multicastSocket.joinGroup(InetAddress.getByName(group));
 
         byte[] receiveData = new byte[1000];
         DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-        s.receive(receivePacket);
-        String sentence = new String(receivePacket.getData(), "UTF-8");
-        System.out.println("RECEIVED: " + sentence);
-        s.close();
+        multicastSocket.receive(receivePacket);
+//        String sentence = new String(receivePacket.getData(), "UTF-8");
+//        System.out.println("RECEIVED: " + sentence);
+        multicastSocket.close();
         return receivePacket;
 
     }
 
-    public void sendResponseToClient(NodeDto nodeDto, DatagramPacket receivePacket, int port, String group) throws IOException {
+    public void sendResponseToClient(NodeDto nodeDto, DatagramPacket receivePacket, Integer port, String group) throws IOException {
         MulticastSocket s;
 
         s = new MulticastSocket(port);

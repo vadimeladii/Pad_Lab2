@@ -34,6 +34,12 @@ public class MessageDto implements Serializable {
         this.operation = operation;
     }
 
+    public MessageDto(MethodName method, FieldName field, String value) {
+        this.method = method;
+        this.field = field;
+        this.operation = operation;
+    }
+
     public MessageDto(MethodName method) {
         this.method = method;
     }

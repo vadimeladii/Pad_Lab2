@@ -36,7 +36,7 @@ public class ClientConnectionImpl implements ClientConnection {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        closeConnection();
+        closeConnection();
     }
 
 
@@ -47,6 +47,7 @@ public class ClientConnectionImpl implements ClientConnection {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        closeConnection();
     }
 
     public void closeConnection() {

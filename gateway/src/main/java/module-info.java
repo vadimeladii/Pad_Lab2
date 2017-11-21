@@ -1,4 +1,3 @@
 module gateway {
-
     requires common;
 }

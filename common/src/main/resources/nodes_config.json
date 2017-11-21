@@ -2,7 +2,7 @@
   {
     "id": 1,
     "host": "localhost",
-    "port": 9100,
+    "port": 9101,
     "users": [
       {
         "id": 1,
@@ -14,29 +14,29 @@
       {
         "id": 3,
         "host": "localhost",
-        "port": 9102
+        "port": 9103
       },
       {
         "id": 2,
         "host": "localhost",
-        "port": 9101
+        "port": 9102
       }
     ]
   },
   {
     "id": 2,
     "host": "localhost",
-    "port": 9101,
+    "port": 9102,
     "dependencies": [
-      {
-        "id": 3,
-        "host": "localhost",
-        "port": 9102
-      },
       {
         "id": 1,
         "host": "localhost",
-        "port": 9100
+        "port": 9101
+      },
+      {
+        "id": 4,
+        "host": "localhost",
+        "port": 9104
       }
     ],
     "users": [
@@ -50,17 +50,17 @@
   {
     "id": 3,
     "host": "localhost",
-    "port": 9102,
+    "port": 9103,
     "dependencies": [
       {
         "id": 1,
         "host": "localhost",
-        "port": 9100
+        "port": 9101
       },
       {
-        "id": 2,
+        "id": 7,
         "host": "localhost",
-        "port": 9101
+        "port": 9107
       }
     ],
     "users": [
@@ -73,6 +73,92 @@
         "id": 4,
         "name": "vadim4",
         "age": 24
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "host": "localhost",
+    "port": 9104,
+    "dependencies": [
+      {
+        "id": 2,
+        "host": "localhost",
+        "port": 9102
+      },
+      {
+        "id": 7,
+        "host": "localhost",
+        "port": 9107
+      }
+    ],
+    "users": [
+      {
+        "id": 5,
+        "name": "vadim5",
+        "age": 25
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "host": "localhost",
+    "port": 9105,
+    "dependencies": [
+      {
+        "id": 6,
+        "host": "localhost",
+        "port": 9106
+      }
+    ],
+    "users": [
+      {
+        "id": 6,
+        "name": "vadim3",
+        "age": 23
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "host": "localhost",
+    "port": 9106,
+    "dependencies": [
+      {
+        "id": 5,
+        "host": "localhost",
+        "port": 9105
+      }
+    ],
+    "users": [
+      {
+        "id": 7,
+        "name": "vadim7",
+        "age": 27
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "host": "localhost",
+    "port": 9107,
+    "dependencies": [
+      {
+        "id": 4,
+        "host": "localhost",
+        "port": 9104
+      },
+      {
+        "id": 3,
+        "host": "localhost",
+        "port": 9103
+      }
+    ],
+    "users": [
+      {
+        "id": 8,
+        "name": "vadim8",
+        "age": 28
       }
     ]
   }

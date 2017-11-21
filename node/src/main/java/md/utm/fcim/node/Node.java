@@ -11,7 +11,7 @@ public class Node {
 
     private NodeDto nodeDto;
 
-    public Node(NodeDto nodeDto) {
+    Node(NodeDto nodeDto) {
         this.nodeDto = nodeDto;
         System.out.println(nodeDto);
         this.run();

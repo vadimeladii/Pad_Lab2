@@ -2,5 +2,8 @@ group 'md.utm.fcim'
 version '1.0-SNAPSHOT'
 
 dependencies {
+    compile(group: "com.github.java-json-tools", name: "json-schema-validator", version: "2.2.8")
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+
     compile project(':common')
 }
